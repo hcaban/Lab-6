@@ -1,6 +1,5 @@
-def initialize_board(height,length):
-    board = []
-    for i in range(height):
+def initialize_board(board):  # in order for test to work an array must be passed in
+    for i in range(height):  # function needs to be reworked
         row = []
         for j in range(length):
             row.append("-")
@@ -38,7 +37,7 @@ def check_if_winner(board, chip_type):
     return False
 
 
-def board_is_full(board):
+def board_is_full(board):  # not needed
     for i, _ in enumerate(board):
         for j, _ in enumerate(board[0]):
             if board[i][j] == '-':
@@ -46,13 +45,13 @@ def board_is_full(board):
     return True
 
 
-def is_valid(board, row, col):
+def is_valid(board, row, col):  # not needed
     if -1 < row <= height + 1 and -1 < col <= length + 1 and board[row][col] == '-':
         return True
     return False
 
 
-def available_square(board, row, col):
+def available_square(board, row, col):  # not needed
     return board[row][col] == '-'
 
 
@@ -63,11 +62,11 @@ def insert_chip(board, row, col, turn):
         board[row][col] = 'x'
 
 
-
-if __name__ == '__main__':
+def main():  # 
     height = int(input('What would you like the height of the board to be?'))
     length = int(input('What would you like the length of the board to be?'))
-    board = initialize_board(height,length)
+    board = [["0" for i in range(height)] for i in range(length)]
+    initialize_board(board)
 
     print("Player 1: x\nPlayer 2: o")
     print_board(board)
@@ -80,34 +79,42 @@ if __name__ == '__main__':
     while True:
         turn = (turn + 1) % 2
         col = int(input(f"{player[turn]}: Which column would you like to choose? "))
-        while not is_valid(board, row, col):
+        while not is_valid(board, row, col)
+
             if row < -1 or col < -1 or row > height - 1 or col > length - 1:
                 print("This position is off the bounds of the board! Try again.")
+
             elif board[row][col] != '-' or old_col == col:
                 row = row - 1
                 insert_chip(board, row, col, turn)
                 print_board(board)
                 old_col = col
                 count += 1
+
                 if count > (height - 1):
                     count = 0
-                    False
                     break
             turn = (turn + 1) % 2
             col = int(input(f"{player[turn]}: Which column would you like to choose? "))
+
         insert_chip(board, row, col, turn)
         print_board(board)
-        #print()
+        # print()
+
         if check_if_winner(board, chip):
             if chip == 'x':
                 print("Player 1 won the game!")
             else:
                 print("Player 2 won the game!")
             break
+
         else:
             if board_is_full(board):
                 print("Draw. Nobody wins.")
                 break
+
         chip = 'o' if chip == 'x' else 'x'
 
 
+if __name__ == '__main__':
+    main()
